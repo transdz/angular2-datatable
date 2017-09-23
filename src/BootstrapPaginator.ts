@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from "@angular/core";
+import {Component, Input, OnChanges, Output} from "@angular/core";
 import {DataTable} from "./DataTable";
 import * as _ from "lodash";
 
@@ -33,7 +33,7 @@ import * as _ from "lodash";
             </li>
             <li class="page-item" *ngIf="p.activePage + 3 <= p.lastPage && p.activePage < 3" (click)="p.setPage(p.activePage + 3)">
                 <a class="page-link" style="cursor: pointer">{{p.activePage+3}}</a>
-            </li>
+            </li>   
             <li class="page-item" *ngIf="p.activePage + 4 <= p.lastPage && p.activePage < 2" (click)="p.setPage(p.activePage + 4)">
                 <a class="page-link" style="cursor: pointer">{{p.activePage+4}}</a>
             </li>
@@ -52,7 +52,7 @@ import * as _ from "lodash";
 export class BootstrapPaginator implements OnChanges {
     @Input("rowsOnPageSet") rowsOnPageSet = [];
     @Input("mfTable") mfTable: DataTable;
-
+    @Output() needRefresh=new EventEmitter();
     minRowsOnPage = 0;
 
     ngOnChanges(changes: any): any {
