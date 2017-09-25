@@ -8,7 +8,8 @@ import {DataTable, PageEvent} from "./DataTable";
 export class Paginator implements OnChanges {
 
     @Input("mfTable") inputMfTable: DataTable;
-
+    @Input("max") max: number;
+    @Output() needLoad=new EventEmitter();
     private mfTable: DataTable;
 
     public activePage: number;
@@ -26,7 +27,12 @@ export class Paginator implements OnChanges {
     }
 
     public setPage(pageNumber: number): void {
+        if( (this.rowsOnPage * pagenumber)> this.max )
+        {
+            this.needLoad.emit(this.mfTable);
+        }
         this.mfTable.setPage(pageNumber, this.rowsOnPage);
+        
     }
 
     public setRowsOnPage(rowsOnPage: number): void {
@@ -37,6 +43,6 @@ export class Paginator implements OnChanges {
         this.activePage = event.activePage;
         this.rowsOnPage = event.rowsOnPage;
         this.dataLength = event.dataLength;
-        this.lastPage = Math.ceil(this.dataLength / this.rowsOnPage);
+        this.lastPage = Math.ceil(this.max / this.rowsOnPage);
     };
 }
