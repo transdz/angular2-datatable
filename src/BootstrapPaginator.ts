@@ -5,7 +5,7 @@ import * as _ from "lodash";
 @Component({
     selector: "mfBootstrapPaginator",
     template: `
-    <mfPaginator #p [mfTable]="mfTable">
+    <mfPaginator [max]="max" #p [mfTable]="mfTable">
         <ul class="pagination" *ngIf="p.dataLength > p.rowsOnPage">
             <li class="page-item" [class.disabled]="p.activePage <= 1" (click)="p.setPage(1)">
                 <a class="page-link" style="cursor: pointer">&laquo;</a>
@@ -53,6 +53,7 @@ export class BootstrapPaginator implements OnChanges {
     @Input("rowsOnPageSet") rowsOnPageSet = [];
     @Input("mfTable") mfTable: DataTable;
     @Output() needRefresh=new EventEmitter();
+    @Input() max:number;
     minRowsOnPage = 0;
 
     ngOnChanges(changes: any): any {
